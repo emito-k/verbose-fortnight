@@ -1,0 +1,33 @@
+name: Node Continuous Integration
+
+on:
+    pull_request:
+        branches: [main]
+
+jobs:
+    build-and-test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
+
+            - name: Set up NodeJS
+              uses: actions/setup-node@v1
+              with:
+                node-version: 16
+            
+            - name: Install dependencies for math service
+              working-directory: BE/math
+              run: npm install
+
+            - name: Run tests for math service
+              working-directory: BE/math
+              run: npm test
+            
+            - name: Install dependecies for physics service
+              working-directory: BE/physics
+              run: npm install
+            
+            - name: Run tests for physics service
+              working-directory: BE/physics
+              run: npm test
